@@ -2,6 +2,7 @@ import { Router } from 'express'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { prisma } from '../db.js'
+import { requireAuth } from '../middleware/auth.js'
 
 const router = Router()
 
@@ -57,6 +58,39 @@ router.post('/register/donor', async (req, res) => {
   }
 })
 
+router.post('/register/hospital', async (req, res) => {
+  const { email, password, name, city, contact } = req.body
+
+  if (!email || !password || !name || !city || !contact) {
+    return res.status(400).json({ error: 'All fields are required' })
+  }
+  if (!/^\d{10}$/.test(contact)) {
+    return res.status(400).json({ error: 'Contact must be a 10-digit number' })
+  }
+
+  try {
+    const existing = await prisma.user.findUnique({ where: { email } })
+    if (existing) {
+      return res.status(409).json({ error: 'Email already registered' })
+    }
+
+    const passwordHash = await bcrypt.hash(password, 10)
+    await prisma.user.create({
+      data: {
+        email,
+        passwordHash,
+        role: 'HOSPITAL',
+        hospital: { create: { name, city, contact } },
+      },
+    })
+
+    res.status(201).json({ message: 'Registered. Awaiting admin verification.' })
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ error: 'Server error' })
+  }
+})
+
 router.post('/login', async (req, res) => {
   const { email, password } = req.body
 
@@ -75,6 +109,10 @@ router.post('/login', async (req, res) => {
     console.error(err)
     res.status(500).json({ error: 'Server error' })
   }
+})
+
+router.get('/me', requireAuth, (req, res) => {
+  res.json(req.user)
 })
 
 export default router
