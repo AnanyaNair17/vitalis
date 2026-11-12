@@ -1,4 +1,4 @@
-import express from 'express';
+﻿import express from 'express';
 import { prisma } from '../db.js';
 import { requireAuth, requireRole } from '../middleware/auth.js';
 
@@ -186,12 +186,25 @@ router.get(
         )
       );
 
-      return res.json({
+            // Reveal phone numbers only after donor acceptance
+      const acceptedDonorIds = new Set(
+        matches
+          .filter((match) => match.status === 'ACCEPTED')
+          .map((match) => match.donorId)
+      );
+
+      const safeDonors = donors.map((donor) => {
+        const { phone, ...publicDetails } = donor;
+        return acceptedDonorIds.has(donor.id)
+          ? { ...publicDetails, phone }
+          : publicDetails;
+      });
+return res.json({
         requestId: bloodRequest.id,
         bloodGroup: bloodRequest.bloodGroup,
         city: bloodRequest.city,
-        totalMatches: donors.length,
-        donors,
+        totalMatches: safeDonors.length,
+        donors: safeDonors,
         matches,
       });
     } catch (err) {

@@ -38,6 +38,7 @@ function DonorRegister() {
 
       if (res.data.token) {
         localStorage.setItem('token', res.data.token)
+        localStorage.setItem('role', 'DONOR')
       }
 
       setSuccess(true)
@@ -56,7 +57,7 @@ function DonorRegister() {
       <div className="min-h-screen bg-[#FFF9F5] flex items-center justify-center p-6">
         <div className="bg-white rounded-2xl shadow-lg p-10 max-w-md text-center">
 
-          <div className="text-5xl mb-5">❤️</div>
+          <div className="text-5xl mb-5 text-green-600">&#10003;</div>
 
           <h1 className="text-2xl font-bold text-[#800020]">
             Registration Successful!

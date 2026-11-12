@@ -1,4 +1,5 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import API from '../api/axios'
 
 function HospitalRegister() {
@@ -52,6 +53,7 @@ function HospitalRegister() {
       console.error('Hospital registration failed:', err)
 
       setError(
+        err.response?.data?.error ||
         err.response?.data?.message ||
         'Registration failed. Please try again.'
       )
@@ -159,9 +161,7 @@ function HospitalRegister() {
 
         <p className="text-center text-sm text-gray-500 mt-6">
           Already registered?{' '}
-          <span className="text-[#800020] font-semibold">
-            Login
-          </span>
+          <Link to="/login" className="text-[#800020] font-semibold hover:underline">Login</Link>
         </p>
 
       </div>

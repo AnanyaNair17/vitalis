@@ -81,7 +81,7 @@ function Home() {
           <div className="relative">
             <div className="bg-[#F4DDE1] rounded-[40px] p-12 min-h-[380px] flex items-center justify-center">
               <div className="text-center">
-                <div className="text-9xl text-[#800020]">♥</div>
+                <div className="text-[12rem] leading-none text-[#800020]">{'\u2665'}</div>
 
                 <h3 className="text-3xl font-bold text-[#4A1428] mt-5">
                   Be Someone's Lifeline
@@ -95,8 +95,18 @@ function Home() {
           </div>
 
         </div>
-      </main>
+</main>
 
+      {/* Medical Disclaimer */}
+      <section className="bg-[#FFF1E8] border-y border-[#F0D9D0] px-8 py-6 text-center">
+        <p className="max-w-4xl mx-auto text-sm text-[#4A1428] leading-relaxed">
+          <strong>Important Medical Disclaimer:</strong> Vitalis is a donor-hospital
+          connection platform only. It does not collect, test, store, or transfuse
+          blood and does not provide medical screening or eligibility clearance.
+          All donor suitability and blood transfusion decisions must be made by
+          qualified professionals at an authorized hospital or blood bank.
+        </p>
+      </section>
       {/* About Section */}
       <section id="about" className="bg-white py-16 px-8 text-center">
         <p className="text-[#800020] uppercase tracking-widest text-sm font-semibold">
@@ -215,7 +225,7 @@ function Home() {
         </p>
 
         <p className="text-xs text-[#E8A0A8] mt-4">
-          © 2026 Vitalis. All rights reserved.
+          &#169; 2026 Vitalis. All rights reserved.
         </p>
       </footer>
 

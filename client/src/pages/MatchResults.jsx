@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import API from '../api/axios'
 
@@ -221,9 +221,20 @@ function MatchResults() {
                         {bloodGroupNames[donor.bloodGroup] || donor.bloodGroup}
                       </span>
 
-                      <span className="text-green-600 font-semibold text-sm">
-                        ● Verified & Available
-                      </span>
+                      {donor.phone ? (
+                        <a
+                          href={`tel:${donor.phone}`}
+                          className="text-green-700 font-semibold text-sm underline"
+                        >
+                          Call: {donor.phone}
+                        </a>
+                      ) : (
+                        <span className="text-gray-500 text-xs">
+                          Contact hidden until acceptance
+                        </span>
+                      )}
+
+                      <span className="text-green-600 font-semibold text-sm">&#10003; Verified & Available</span>
 
                     </div>
 
@@ -247,3 +258,4 @@ function MatchResults() {
 }
 
 export default MatchResults
+

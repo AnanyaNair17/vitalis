@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 
 function Login() {
@@ -33,6 +33,7 @@ function Login() {
 
       // Store JWT token
       localStorage.setItem('token', data.token)
+      localStorage.setItem('role', data.role)
 
       // Redirect according to user role
       if (data.role === 'DONOR') {
